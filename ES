@@ -1,0 +1,313 @@
+If you want to run 2 nodes on same cluster, then you can create two copies of the same ES folder and run them separately with the same cluster.name property. ES is smart enough to switch to another port if default one is used. Same goes for communication port.
+IMPORTANT: If you have already used a single ES folder to run ES and you want to run another node and you want to make a copy of the same ES folder to start another node, you should delete /data folder in ES folder which contains the node data in /node folder. Otherwise you shall get exceptions when the ES tries to join two nodes. The ids of the nodes would be same.
+
+
+Common ES queries:
+
+GET /_cluster/health --tells cluster name, status, number of nodes, data nodes, active pr nodes and shards and unassigned shards and other amongst. 
+GET /_cat/nodes?v  --tells info about nodes and their respective nodes in verbose.
+GET /_cat/shards  --number of shards of indices (started and unassigned both)
+GET /_cat/indices  -- about the indices in the node and their healths.
+
+GET /products/_doc/100 --i=gives document with id of 100
+***********************************************************************************************************************************8
+
+Creating an index:
+
+Simply execute the below script:
+
+PUT /products
+
+OR if you want to specify the number of replicas and shards, you might want to run:
+
+PUT /products
+{
+	"settings":{
+		"number_of_replicas":2,
+		"number_of_shards":2
+	}
+}
+
+At the cluster level, if action.auto_create_index is enabled, indices will automatically be created when adding documents. This is default true.
+
+***********************************************************************************************************************************8
+
+ES documents are immutable. If we update it, it simply replaces it. This is how update API works:
+1. The current document is retrieved
+2. The filed values are changed
+3. The existing document is replaced with the modified document.
+
+Here is how update is done. NOTE: This is the same way you can add a new field.
+
+POST /products/_update/100
+{
+	"doc" :{
+		"in_stock":3
+	}
+}
+
+Generically:
+
+POST /*index_name*/_update/*id*
+{
+	"doc" : {
+		"*key*":*value*
+	}
+}
+
+Running above gives:
+
+{
+  "_index" : "products",
+  "_type" : "_doc",
+  "_id" : "100",
+  "_version" : 4,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 3,
+    "successful" : 2,
+    "failed" : 0
+  },
+  "_seq_no" : 4,
+  "_primary_term" : 2
+}
+
+
+Adding a new field:
+
+POST /*index_name*/_update/*id*
+{
+	"doc" : {
+		"*new key*":*new value*
+	}
+}
+
+IMPORTANT: IF NEW VALUE IS SAME AS THE EXISTING VALUE, YOU WOULD GET "result" AS "noop" INSTEAD OF "updated".
+HOWEVER, IN CASE OF SCRIPTED UPDATES, YOU WOULD GET "result" AS "updated" NO MATTER IF THE NEW VALUE IS SAME AS OLD ONE.
+
+***********************************************************************************************************************************8
+
+Scripted Updates:
+This is a bigger topic. But here is an example. We can update the value of a key without knowing its value with scripts. We use "script" tag for that.
+
+POST /products/_update/100
+{
+	"script":{
+		"source":"ctx._source.in_stock--"
+	}
+}
+The above script decreases value by one.
+The double quote for ctx._source.in_stock can be put in triple quotes if multiple lines are needed for the script.
+
+Running above script gives use:
+{
+  "_index" : "products",
+  "_type" : "_doc",
+  "_id" : "100",
+  "_version" : 3,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 3,
+    "successful" : 2,
+    "failed" : 0
+  },
+  "_seq_no" : 3,
+  "_primary_term" : 2
+}
+as output.
+
+
+The values can be changed using scripted updates as well.
+Check out below query:
+
+POST /products/_update/100{
+	"script":{
+		"source":"ctx._source.in_stock = 10"
+	}
+}
+
+Running this gives:
+{
+  "_index" : "products",
+  "_type" : "_doc",
+  "_id" : "100",
+  "_version" : 5,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 3,
+    "successful" : 2,
+    "failed" : 0
+  },
+  "_seq_no" : 5,
+  "_primary_term" : 2
+}
+
+
+The value can be changed via an application by sending parameters to the query.
+For example, I can send 4 as a value to be subtracted from the in_stock value. To do that, I have to pass this value in "params" object:
+
+POST/products/_update/100
+{
+	"script":{
+		"source":"ctx._source.in_stock -= params.quantity",
+		"params":{
+			"quantity":4
+		}
+	}
+}
+
+Running above query gives me:
+
+{
+  "_index" : "products",
+  "_type" : "_doc",
+  "_id" : "100",
+  "_version" : 6,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 3,
+    "successful" : 2,
+    "failed" : 0
+  },
+  "_seq_no" : 6,
+  "_primary_term" : 2
+}
+
+
+IN CASE OF SCRIPTED UPDATES, YOU WOULD GET "result" AS "updated" NO MATTER IF THE NEW VALUE IS SAME AS OLD ONE.
+
+We can write a query based on condition. For example:
+
+POST /products/_update/100
+{
+  "script":{
+    "source": """
+      if(ctx._source.in_stock == 6){
+        ctx.op = 'noop'
+      }
+      ctx._source.in_stock--;
+    """
+  }
+}
+
+The above script gives:
+{
+  "_index" : "products",
+  "_type" : "_doc",
+  "_id" : "100",
+  "_version" : 6,
+  "result" : "noop",
+  "_shards" : {
+    "total" : 0,
+    "successful" : 0,
+    "failed" : 0
+  },
+  "_seq_no" : 6,
+  "_primary_term" : 2
+}
+
+
+If we do not add- ctx.op = 'noop', it would always result in result:updated:
+
+POST /products/_update/100
+{
+  "script":{
+    "source": """
+      if(ctx._source.in_stock>6){
+        ctx._source.in_stock--;
+      }
+    """
+  }
+}
+
+This gives:
+{
+  "_index" : "products",
+  "_type" : "_doc",
+  "_id" : "100",
+  "_version" : 8,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 3,
+    "successful" : 2,
+    "failed" : 0
+  },
+  "_seq_no" : 8,
+  "_primary_term" : 2
+}
+
+
+If you set the ctx.op ='delete' based on a condition, then that would cause the document to be deleted and the result would have 'deleted' value.
+
+
+POST /products/_update/100
+{
+  "script":{
+    "source": """
+      if(ctx._source.in_stock<1){
+        ctx.op ='delete'
+      }
+	  ctx._source.in_stock--;
+    """
+  }
+}
+
+The above query means that if all products are sold, in_stock becomes 0, then the document 'products' would be deleted.
+
+*********************************************************************************************************************************************************
+READING DATA
+ROUTING
+
+process of resolving a shard for a document.
+Formula used when indexing, retrieving and updating documents:
+shard_num = hash(_routing) % num_of_primary_shards
+
+Routing can be customised. The default strategy for routing distributes documents evenly.
+One of the reasons why and index's shards cannot be changed is that the routing formula would then yield different results.
+
+The shard num for retrieval could be primary or replica shard for the reason that if all requests are directed to same shard, it does not scale well.
+
+A shard is chosen from a replication group (which is combination of primary and replica shards) with Adapter Replica Selection (ARS) which selects shards copy that is esteemed to be best on basis of some metadata and which is believed to give best performance. Once the shard is selected, the coordinating node sends the real request to that shard. When shard responds, coordinating shard receives it and shares it with the client/app/command line request/kibana.
+
+*********************************************************************************************************************************************************
+
+WRITING DATA
+
+First received by primary shard. Validation is done and after this performs it locally and sends parallely to replica shards. Operation will succeed even if the operation cannot be replicated to the replica shards.
+
+Problem: If B receives it and passes to replica shards B1 and B2 for copying, but at the same time, B goes down and B2 replica shard didn't get the chance to update. Now, B2 becomes primary shard and now we have problem of data mismatch with B1 replica shard and B2 primary shard. This is a rare case, though.
+ES solves it and other issues by:
+
+PRIMARY TERMS & SEQUENCE NUMBER
+
+Primary Term:
+* way to distinguish between old and new primary shards if primary shard has changed.
+* essentially, a counter for how many times the primary shard has changed.
+* primary term is appended to write operations.
+* primary terms for all replication groups are persisted in cluster state.
+* this enables replica shards to tell if the primary shard has changed since the operation was forwarded.
+
+Sequence Number:
+Apart from associating each operation with a primary term, a sequence number is also given to the operation.
+
+* this sequence number is just incrementing counter for each operation at least until primary shard changes.
+* primary shard is responsible for increasing this number when it processes a write request.
+* sequence number help ES to know the order operation happened on a given primary shard.
+
+
+* primary term & sequence number help ES to recover when primary shard changes.
+* instead of comparing data on disk, it can use primary term & sequence number to figure out which operations have already been performed & which are needed to bring data upto date.
+* for large indices, this process is expensive and not feasible to compare millions of operations to figure this out.
+* especially when data is queried and updated at a high rate.
+
+To speed up process, ES uses "checkpoints"- global and locally
+
+GLOBAL AND LOCAL CHECKPOINTS:
+
+* both are sequence numbers.
+* each replication group has a global checkpoint.
+* each reploca shard has a local checkpoint.
+* any operations containing a sequence number lower than the global checkpoint have already been performed on alll shards within the replication group.
+* if primary shard fails and rejoins later, ES only need to compare operations that are above the global checkpoints that it last knew about.
+* likewise, if replica shard fails, only operations that are higher than its local checkpoint need to be applied when it comes back.
+* es compares only operations that were performed while it was gone instead of the entire history, the replication group.
