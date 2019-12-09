@@ -24,4 +24,4 @@ GET /products/_mappings
 We get:
 ![add_mappings][addmap]
 
-[addmap]: <https://github.com/penguinmishra/images_repo/blob/master/Elasticsearch/dynamic_mapping_ES.jpg>
+[addmap]: <https://github.com/penguinmishra/images_repo/blob/master/Elasticsearch/Adding%20mappings%20to%20existing%20index.JPG>
