@@ -1,3 +1,4 @@
+```sh
 POST /_analyze
 {
   "tokenizer": "ngram",
@@ -5,7 +6,7 @@ POST /_analyze
   "char_filter": ["html_strip"], 
   "text":"I'm in the mood to drink wine!"
 }
-
+```
 ## TOKENIZERS
 - Word Oriented Tokenizers
 - Partial Word Tokenizers
