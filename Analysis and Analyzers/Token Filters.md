@@ -9,7 +9,7 @@ Works on token streams received from tokenizers.<br>
 
 - <code>nGram</code>: Does the same thing as <code>ngram</code> tokenizer but using this provides the flexibility to use another tokenizer.<br> <code>\[Red, Wine]</code> becomes <code>\[R, Re, Red, e, ed, d, W, Wi, i, in, n, ne, e]</code>.
 
-- <code>edgeNGram</code>: Does the same thing as <code>edge_ngram<code>. <code>\[Red, Wine] becomes <code>\[R, Re, W, Wi]</code> with a settiing of minimum letter 1 and max 2.
+- <code>edgeNGram</code>: Does the same thing as <code>edge_ngram<code>. <code>\[Red, Wine]</code> becomes <code>\[R, Re, W, Wi]</code> with a settiing of minimum letter 1 and max 2.
 
 - <code>stop</code>: removes stop words. ES has a default list for languages which can be provided explicitly. <code>\[I'm, in, the, mood, for, drinking, semi, dry, red, wine]</code> becomes <code>\[O'm, mood, drinking, semi, dry, red, wine]</code>
 
