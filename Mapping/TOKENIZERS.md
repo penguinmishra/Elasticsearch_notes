@@ -83,7 +83,7 @@ POST /_analyze
 #### Structured Text Tokenizers
 used for structured text (emails, addresses, zip code, identifiers)
 
-- <code>keyword<code>: no-op tokenizer which outputs the exact same text as a single term. Useful when you don't want to use standard tokenizer and want to work with character filters or token filters.
+- <code>keyword</code>: no-op tokenizer which outputs the exact same text as a single term. Useful when you don't want to use standard tokenizer and want to work with character filters or token filters.
 "I'm in the mood to drink wine!" gives \[I'm in the mood to drink wine!]
 
 - <code>pattern</code>: regex separator. Alternatively captures matched text as terms.
