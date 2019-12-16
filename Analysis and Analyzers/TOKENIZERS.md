@@ -13,7 +13,7 @@ POST /_analyze
 - Structured Text Tokenizers
 
 #### Word Oriented Tokenizers
-- <code>standard</code>: full text to words. removes symbols (not apostrophy).
+- <code>standard</code>: full text to words. removes symbols (not apostrophe).
 ```sh
 POST /_analyze
 {
