@@ -61,7 +61,7 @@ which gives:
 ## **IMPORTANT**
 Since the index has default mapping, it worked but if we were to use this analyzer for an existing MAPPING, we'd have to delete the index and reindex the documents.<br>
 However, while specifying the mappings, the analyzer can be provided.<br>
-The following example has been taken from ![here][ESURL]
+The following example has been taken from [here](ESURL)
 ```sh
 PUT /my_index
 {
