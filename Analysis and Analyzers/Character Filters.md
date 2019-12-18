@@ -1,4 +1,4 @@
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "ngram",
@@ -14,7 +14,7 @@ strips html content (tags and signs)
 
 #### <code>mapping</code>
 replaces some text or signs based on a mapping.
-example: I'm :) for being :( is :( can be filtered to I'm _happy_ for being _sad_ is _sad_
+example: I'm :) for being :( is :( can be filtered to I'm \_happy_ for being \_sad_ is \_sad_
 
 #### <code>pattern_replace</code>
 does a regex matching and replaces. Capture group may be used.<br>
