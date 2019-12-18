@@ -2,7 +2,7 @@
 
 Usually, the analyzers and filters can be specified while creating index using `settings` tag.
 
-```sh
+```
 PUT /existing_analyzer_config
 {
   "settings": {
@@ -26,7 +26,7 @@ PUT /existing_analyzer_config
 #### Using custom analyzer and filter
 
 To use the custom analyzer (english_stop), we need to put a `POST` request:<br>
-```sh
+```
 POST /existing_analyzer_config/_analyze
 {
   "analyzer": "english_stop",
@@ -36,7 +36,7 @@ POST /existing_analyzer_config/_analyze
 This would remove all the stop words from the text.<br><br>
 
 To use custom filter (my_filter), we need to specify the tokenizer and then our filter:<br>
-```sh
+```
 POST /existing_analyzer_config/_analyze
 {
   "tokenizer": "standard", 

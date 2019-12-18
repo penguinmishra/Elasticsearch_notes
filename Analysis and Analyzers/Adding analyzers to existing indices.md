@@ -6,11 +6,11 @@ This can be done with the following way:
 - open the index
 
 #### Closing the index:
-```sh
+```
 POST /analyzers_test/_close
 ```
 gives:
-```sh
+```
 {
   "acknowledged" : true,
   "shards_acknowledged" : true,
@@ -24,7 +24,7 @@ gives:
 #### add analyzer(s):
 
 This can be done with `_settings` API:
-```sh
+```
 PUT /analyzers_test/_settings
 {
   "analysis":{
@@ -38,7 +38,7 @@ PUT /analyzers_test/_settings
 }
 ```
 This gives:
-```sh
+```
 {
   "acknowledged" : true
 }
@@ -47,11 +47,11 @@ And thus, the analyzer has been added to the index.
 
 #### Open the index:
 This is can be done using simply:
-```sh
+```
 POST /analyzers_test/_open
 ```
 which gives:
-```sh
+```
 {
   "acknowledged" : true,
   "shards_acknowledged" : true
@@ -62,7 +62,7 @@ which gives:
 Since the index has default mapping, it worked but if we were to use this analyzer for an existing MAPPING, we'd have to delete the index and reindex the documents.<br>
 However, while specifying the mappings, the analyzer can be provided.<br>
 The following example has been taken from [here][ESURL]
-```sh
+```
 PUT /my_index
 {
   "mappings": {

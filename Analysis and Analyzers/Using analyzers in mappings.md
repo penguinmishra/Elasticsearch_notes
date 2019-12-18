@@ -1,7 +1,7 @@
 ## Using analyzers in mappings
 
 After creating index, we can provide the analyzers in the mapping the following way:<br>
-```sh
+```
 PUT /analyzers_test/_mapping
 {
  "properties": {
@@ -18,7 +18,7 @@ PUT /analyzers_test/_mapping
 ```
 
 Now putting a document in it:<br>
-```sh
+```
 POST /analyzers_test/_doc/1
 {
   "description": "drinking",
@@ -27,7 +27,7 @@ POST /analyzers_test/_doc/1
 ```
 
 Now for fetching, we do that one by one. First we do that for teaser:<br>
-```sh
+```
 GET /analyzers_test/_search
 {
   "query": {
@@ -40,7 +40,7 @@ GET /analyzers_test/_search
 }
 ```
 The above gives:<br>
-```sh
+```
 {
   "took" : 762,
   "timed_out" : false,
@@ -72,7 +72,7 @@ The above gives:<br>
 }
 ```
 But the below:<br>
-```sh
+```
 GET /analyzers_test/_search
 {
   "query": {
@@ -85,7 +85,7 @@ GET /analyzers_test/_search
 }
 ```
 gives:<br>
-```sh
+```
 {
   "took" : 0,
   "timed_out" : false,
@@ -106,7 +106,7 @@ gives:<br>
 }
 ```
 This does not give any result because the my_analyzer is defined as follows and uses `stemmer` filter and saves drinking as drink:<br>
-```sh
+```
 PUT /analyzers_test
 {
   "settings": {

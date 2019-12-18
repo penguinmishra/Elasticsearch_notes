@@ -1,4 +1,4 @@
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "ngram",
@@ -14,7 +14,7 @@ POST /_analyze
 
 #### Word Oriented Tokenizers
 - `standard`: full text to words. removes symbols (not apostrophe).
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "standard",
@@ -22,7 +22,7 @@ POST /_analyze
 }
 ```
 - `letter`: divides text into terms when encountering a character that is not a letter.
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "letter",
@@ -30,7 +30,7 @@ POST /_analyze
 }
 ```
 - `lowecase`: works as `letter` but lowercases all terms. removes special characters.
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "lowercase",
@@ -39,7 +39,7 @@ POST /_analyze
 ```
 
 - `whitespace`: divides text into terms when encountering whitespace character. does not remove special characters.
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "whitespace",
@@ -47,7 +47,7 @@ POST /_analyze
 }
 ```
 - `uax_url_email`: like standard. but URLs and emails are in single token. Does not remove special characters.
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "whitespace",
@@ -60,7 +60,7 @@ POST /_analyze
 breaks up text/words into smaller fragments used for partial word matching.
 
 - `ngram`: breaks text into words when encountering certain characters and then emits N-gram of specified length.
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "ngram",
@@ -68,12 +68,12 @@ POST /_analyze
 }
 ```
 gives
-```sh
+```
 [Re, Red, ed, Wi, Win, Wine, ine, ne]
 ```
 
 - `edge_ngram`: emits ngrams of each terms beginning from the start of the word. No great performance when used in auto-completion. Suggestors are better.
-```sh
+```
 POST /_analyze
 {
   "tokenizer": "edge_ngram",

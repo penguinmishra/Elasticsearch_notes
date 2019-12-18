@@ -9,7 +9,7 @@ To disable stop words for phrases a field utilising three analyzer settings will
 - A `search_analyzer` setting for non-phrase queries that will remove stop words
 - A `search_quote_analyzer` setting for phrase queries that will not remove stop words
 
-```sh
+```
 PUT my_index
 {
    "settings":{
