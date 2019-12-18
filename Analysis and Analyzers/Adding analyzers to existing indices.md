@@ -95,4 +95,4 @@ GET my_index/_analyze
 The first <code>GET</code> returns the tokens: <code>\[ the, quick, brown, foxes ]</code>.
 The second <code>GET</code> returns the tokens: <code>\[ quick, brown, fox ]</code>.
 
-[ESURL]: <https://www.elastic.co/guide/en/elasticsearch/reference/current/analyzer.html>
+(ESURL): <https://www.elastic.co/guide/en/elasticsearch/reference/current/analyzer.html>
