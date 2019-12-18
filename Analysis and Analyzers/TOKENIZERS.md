@@ -85,10 +85,10 @@ POST /_analyze
 used for structured text (emails, addresses, zip code, identifiers)
 
 - `keyword`: no-op tokenizer which outputs the exact same text as a single term. Useful when you don't want to use standard tokenizer and want to work with character filters or token filters.
-"I'm in the mood to drink wine!" gives \[I'm in the mood to drink wine!]
+"I'm in the mood to drink wine!" gives `[I'm in the mood to drink wine!]`
 
 - `pattern`: regex separator. Alternatively captures matched text as terms.
-"I, like, red, wine!" gives \[I, like, red, wine!] when regex is a comma.
+"I, like, red, wine!" gives `[I, like, red, wine!]` when regex is a comma.
 
 - `path_hierarchy`: splits hierarchical values (eg system path) and emits a term for each component in the tree. Uses path separator (/) as default splitter which can be configured.
 "/path/to/some/directory" becomes \[\/path, \/path/to, \/path/to/some, \/path/to/some/directory]
