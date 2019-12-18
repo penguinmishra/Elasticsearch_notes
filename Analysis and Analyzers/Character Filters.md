@@ -7,16 +7,16 @@ POST /_analyze
   "text":"I'm in the mood to drink wine!"
 }
 ```
-## Character Filters <code>char_filter</code>
+## Character Filters `char_filter`
 
-#### <code>html_strip</code>
+#### `html_strip`
 strips html content (tags and signs)
 
-#### <code>mapping</code>
+#### `mapping`
 replaces some text or signs based on a mapping.
 example: I'm :) for being :( is :( can be filtered to I'm \_happy_ for being \_sad_ is \_sad_
 
-#### <code>pattern_replace</code>
+#### `pattern_replace`
 does a regex matching and replaces. Capture group may be used.<br>
 Pattern: ([a-zA-Z0-9]+)(-?)<br>
 Replacement: $1 (this is a capture group. normal text can be used)<br>
