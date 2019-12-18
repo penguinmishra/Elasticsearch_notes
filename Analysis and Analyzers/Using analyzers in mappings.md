@@ -105,7 +105,7 @@ gives:<br>
   }
 }
 ```
-This does not give any result because the my_analyzer is defined as follows and uses <code>stemmer</code> filter and saves drinking as drink:<br>
+This does not give any result because the my_analyzer is defined as follows and uses `stemmer` filter and saves drinking as drink:<br>
 ```sh
 PUT /analyzers_test
 {

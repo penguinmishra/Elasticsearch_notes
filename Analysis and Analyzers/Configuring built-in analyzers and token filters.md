@@ -1,6 +1,6 @@
 ## Configuring built-in analyzers and token filters
 
-Usually, the analyzers and filters can be specified while creating index using <code>settings</code> tag.
+Usually, the analyzers and filters can be specified while creating index using `settings` tag.
 
 ```sh
 PUT /existing_analyzer_config
@@ -25,7 +25,7 @@ PUT /existing_analyzer_config
 ```
 #### Using custom analyzer and filter
 
-To use the custom analyzer (english_stop), we need to put a <code>POST</code> request:<br>
+To use the custom analyzer (english_stop), we need to put a `POST` request:<br>
 ```sh
 POST /existing_analyzer_config/_analyze
 {

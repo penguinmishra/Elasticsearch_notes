@@ -4,42 +4,42 @@ Analyzers are a combination of 3: character filters, tokenizers and token filter
 
 ### Default anayzers
 
-#### <code>standard</code>:
+#### `standard`:
 
 - divides text into terms using Unicode Text Segmentation (word boundaries).
 - removes punctuation, lowercase terms & optionally removes stop words.
 - combination of standard tokenizer + standard token filter + lowercase token filter + stop token filter (optional).
-- <code>"I'm in the mood for drinking semi-dry red wine!"</code> becomes <code>\[i, m, in, the, mood, for, drinking, semi, dry, red, wine]</code>
+- `"I'm in the mood for drinking semi-dry red wine!"` becomes `\[i, m, in, the, mood, for, drinking, semi, dry, red, wine]`
 
-#### <code>simple</code>
+#### `simple`
 
 - divides text into terms when encountering a character that is not a letter. Also, lowercases all terms.
 - combination of letter and lowercase tokenizer
-- <code>"I'm in the mood for drinking semi-dry red wine!"</code> becomes <code>\[i, m , in, the, mood, for, drinking, semi, dry, red, wine]</code>.
+- `"I'm in the mood for drinking semi-dry red wine!"` becomes `\[i, m , in, the, mood, for, drinking, semi, dry, red, wine]`.
 
-#### <code>stop</code>
+#### `stop`
 
 - simple analyzer + removes stop words. lowercase tokenizer + stop token filter.
-- difference between <code>standard</code> + stop & this is of the tokenizer. But the standard is better fit.
-- <code>"I'm in the mood for drinking semi-dry red wine!"</code> becomes <code>\[i, m, mood, drinking, semi, dry, red, wine]</code>
+- difference between `standard` + stop & this is of the tokenizer. But the standard is better fit.
+- `"I'm in the mood for drinking semi-dry red wine!"` becomes `\[i, m, mood, drinking, semi, dry, red, wine]`
 
-### Language Analyzers Group (<code>english,...</code>)
+### Language Analyzers Group (`english,...`)
 
-language specific analyzers. Internally uses various filters such as <code>stop</code> token filter and <stemmer> token filter.<br>
-Example: <code>"I'm in the mood for drinking semi-dry red wine!"</code> becomes <code>\[i'm, mood, drink, semi, dry, red, wine]</code>
+language specific analyzers. Internally uses various filters such as `stop` token filter and <stemmer> token filter.<br>
+Example: `"I'm in the mood for drinking semi-dry red wine!"` becomes `\[i'm, mood, drink, semi, dry, red, wine]`
 
-#### <code>keyword</code>
+#### `keyword`
 
-- no-op analyzer which returns the input as a single term. This is done by <code>keyword</code> tokenizer internally.
-- <code>"I'm in the mood for drinking semi-dry red wine!"</code> becomes <code>\[I'm in the mood for drinking semi-dry red wine!]</code>
+- no-op analyzer which returns the input as a single term. This is done by `keyword` tokenizer internally.
+- `"I'm in the mood for drinking semi-dry red wine!"` becomes `\[I'm in the mood for drinking semi-dry red wine!]`
 
-#### <code>pattern</code>
+#### `pattern`
 
-- splits text into token based on supplied regex. Done by <code>pattern</code> tokenizer internally.
-- <code>lowercase</code> + <code>stop</code> token filters are optional.
-- <code>"I, like, red, wine!"</code> becomes <code>\[I, like, red, wine!]</code> using comma as regex.
+- splits text into token based on supplied regex. Done by `pattern` tokenizer internally.
+- `lowercase` + `stop` token filters are optional.
+- `"I, like, red, wine!"` becomes `\[I, like, red, wine!]` using comma as regex.
 
-#### <code>whitespace</code>
+#### `whitespace`
 
-- breaks text into terms when encountering a whitespace character. Does with <code>whitespace</code> tokenizer.
-- <code>"I'm in the mood for drinking semi-dry red wine!"</code> becomes <code>\[I'm, in, the, mood, for, drinking, semi-dry, red, wine!]
+- breaks text into terms when encountering a whitespace character. Does with `whitespace` tokenizer.
+- `"I'm in the mood for drinking semi-dry red wine!"` becomes `\[I'm, in, the, mood, for, drinking, semi-dry, red, wine!]

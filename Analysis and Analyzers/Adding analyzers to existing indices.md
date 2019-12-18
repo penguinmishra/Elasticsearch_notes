@@ -23,7 +23,7 @@ gives:
 ```
 #### add analyzer(s):
 
-This can be done with <code>\_settings</code> API:
+This can be done with `\_settings` API:
 ```sh
 PUT /analyzers_test/_settings
 {
@@ -92,7 +92,7 @@ GET my_index/_analyze
   "text": "The quick Brown Foxes."
 }
 ```
-The first <code>GET</code> returns the tokens: <code>\[ the, quick, brown, foxes ]</code>.
-The second <code>GET</code> returns the tokens: <code>\[ quick, brown, fox ]</code>.
+The first `GET` returns the tokens: `\[ the, quick, brown, foxes ]`.
+The second `GET` returns the tokens: `\[ quick, brown, fox ]`.
 
 [ESURL]: <https://www.elastic.co/guide/en/elasticsearch/reference/current/analyzer.html>

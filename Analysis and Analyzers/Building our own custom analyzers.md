@@ -1,7 +1,7 @@
 ## Building our own custom analyzers
 
-This can be done by using <code>settings</code> in <code>PUT</code> request while creating an index the below way:
-```sh
+This can be done by using `settings` in `PUT` request while creating an index the below way:
+```
 PUT /analyzers_test
 {
   "settings": {
@@ -32,10 +32,10 @@ PUT /analyzers_test
   }
 }
 ```
-**IMPORTANT : DO NOT INCLUDE <code>standard</code> IN <code>filter</code>. THIS HAS BEEN REMOVED. WHILE ADDING THE INDEX, THIS WON'T THROW ANY EXCEPTION, BUT WHILE ANALYZING, IT SHALL.**<br>
+**IMPORTANT : DO NOT INCLUDE `standard` IN `filter`. THIS HAS BEEN REMOVED. WHILE ADDING THE INDEX, THIS WON'T THROW ANY EXCEPTION, BUT WHILE ANALYZING, IT SHALL.**<br>
 
 After we execute the above index creation request, we can analyze a text with our own analyzer:<br>
-```sh
+```
 POST /analyzers_test/_analyze
 {
   "analyzer": "my_analyzer",
